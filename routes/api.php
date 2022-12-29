@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UsersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,3 +27,5 @@ Route::get('/alpha/convert/{input_alpha}', [TaskController::class, 'ConvertAlpha
 ->whereAlpha('input_alpha');
 // Problem #3
 Route::get('/', [TaskController::class, '']);
+// users issue
+Route::apiResource('/users', UsersController::class);

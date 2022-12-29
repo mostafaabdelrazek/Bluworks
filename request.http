@@ -1,0 +1,35 @@
+###
+GET http://127.0.0.1:8000/api/users Http/1.1
+Content-Type: application/json
+Accept: application/json
+
+###
+GET http://127.0.0.1:8000/api/users/1 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+###
+POST http://127.0.0.1:8000/api/users HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "userName" : "Mosdfstafa",
+    "email" : "lolo_2s0@sdf.com",
+    "password" : "123413",
+    "phoneNumber" : "+2s03s303",
+    "dateOfBirth" : "2022-02-09"
+}
+
+###
+PUT http://127.0.0.1:8000/api/users/1 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "userName" : "Khiera Ahmed Loudgani",
+    "email" : "lolo_202@test.com",
+    "password" : "101010101",
+    "phoneNumber" : "+203303",
+    "dateOfBirth" : "2022-01-02"
+}
