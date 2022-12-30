@@ -1,4 +1,11 @@
 ###
+GET http://127.0.0.1:8000/api/gapwithfiveexclusion/1/15 Http/1.1
+
+###
+GET http://127.0.0.1:8000/api/alpha/convert/aa Http/1.1
+
+
+###
 GET http://127.0.0.1:8000/api/users Http/1.1
 Content-Type: application/json
 Accept: application/json
