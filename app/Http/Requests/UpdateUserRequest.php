@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Lib\ValidationResponse;
 
-class StoreUserRequest extends ValidationResponse
+class UpdateUserRequest extends ValidationResponse
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class StoreUserRequest extends ValidationResponse
     {
         return [
             "userName" => "required|min:4|max:50",
-            "email" => "required|email|unique:users",
+            "email" => "required|email|unique:users,email,$this->user,id",
             "phoneNumber" => "required|unique:users,phoneNumber,$this->user,id",
             "dateOfBirth" => "required|date|date_format:Y-m-d",
             "password" => "required|min:6"

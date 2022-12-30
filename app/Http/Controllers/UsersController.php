@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 
 class UsersController extends Controller
@@ -19,28 +19,6 @@ class UsersController extends Controller
         // Done
         $users = User::all();
         return self::Response(Response::HTTP_OK, 'Success', 'Data retrieved successfully.', $users);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUserRequest $request)
-    {
-        $validated = $request->validated();
-        $user = new User();
-        $user->userName = $validated['userName'];
-        $user->dateOfBirth = $validated['dateOfBirth'];
-        $user->email = $validated['email'];
-        $user->phoneNumber = $validated['phoneNumber'];
-        $user->password = $validated['password'];
-        $result = $user->Save();
-        if ($result !== true) {
-            return self::Response(Response::HTTP_INTERNAL_SERVER_ERROR, 'Error', 'Fialed to register a new user');
-        }
-        return self::Response(Response::HTTP_OK, 'Success', 'Register a new user successfully', $user);
     }
 
     /**
@@ -67,7 +45,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUserRequest $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         $validated = $request->validated();
         $user = User::find($id);
@@ -78,12 +56,12 @@ class UsersController extends Controller
         $user->dateOfBirth = $validated['dateOfBirth'];
         $user->email = $validated['email'];
         $user->phoneNumber = $validated['phoneNumber'];
-        $user->password = $validated['password'];
+        $user->password = bcrypt($validated['password']);
         $result = $user->Save();
         if ($result !== true) {
             return self::Response(Response::HTTP_INTERNAL_SERVER_ERROR, 'Error', 'Fialed to register a new user');
         }
-        return self::Response(Response::HTTP_OK, 'Success', 'Register a new user successfully', $user);
+        return self::Response(Response::HTTP_OK, 'Success', 'Update user successfully', $user);
     }
 
     /**

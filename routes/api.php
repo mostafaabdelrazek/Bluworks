@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,10 +16,7 @@ use App\Http\Controllers\UsersController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+// public route
 // problem #1
 Route::get('/gapwithfiveexclusion/{start_number}/{end_number}', [TaskController::class, 'ReturnGapWithFiveExclusion'])
 ->where(['start_number' => '[-]?[0-9]+', 'end_number'=> '[-]?[0-9]+']);
@@ -26,6 +24,14 @@ Route::get('/gapwithfiveexclusion/{start_number}/{end_number}', [TaskController:
 Route::get('/alpha/convert/{input_alpha}', [TaskController::class, 'ConvertAlphaToDecimal'])
 ->whereAlpha('input_alpha');
 // Problem #3
-Route::get('/', [TaskController::class, '']);
-// users issue
-Route::apiResource('/users', UsersController::class);
+// Route::get('/', [TaskController::class, '']);
+
+// User public routes 
+Route::post('users/register', [AuthController::class, 'Register']);
+Route::post('users/login', [AuthController::class, 'Login']);
+
+// User protected routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('/users', UsersController::class, ['except'=> ['store']]);
+    Route::post('/users/logout', [AuthController::class, 'Logout']);
+});
